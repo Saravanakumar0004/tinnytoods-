@@ -1,0 +1,50 @@
+```
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# Django
+db.sqlite3
+media/
+staticfiles/
+
+# Environment variables
+.env
+
+# VS Code / PyCharm
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+
+# Logs
+*.log
+
+# Python cache folders inside subdirs
+**/__pycache__/
+
+# Coverage / test
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Migrations cache (not migrations themselves!)
+*.pyc
+
+# Node (if you have React inside same repo)
+node_modules/
+dist/
+build/
+
+```
