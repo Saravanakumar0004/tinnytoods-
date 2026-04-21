@@ -19,12 +19,9 @@ import Banner from "@/components/Banner";
 import SEO from "@/component/Seo";
 import LocalBusinessSchema from "@/component/LocalBussinessSchema";
 
-const BASE_URL = import.meta.env.BASE_URL;
-
 const LOADED_KEY = "tiny_todds_loaded";
 
 const Index = () => {
-  // Only show loading if this is the very first visit this session
   const [isLoading, setIsLoading] = useState(
     () => !sessionStorage.getItem(LOADED_KEY)
   );
@@ -38,10 +35,19 @@ const Index = () => {
     }, 2500);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isLoading]);
 
   return (
     <>
+      {/* SEO must be outside <main> so Helmet injects into <head> correctly */}
+      <SEO
+        title="Tiny Todds Therapy Care | Autism & Child Therapy Center in Chennai"
+        description="Tiny Todds Therapy Care offers Speech Therapy, Occupational Therapy, Behavioral Therapy, Early Intervention, Special Education & Parent Training in Chennai."
+        canonical="https://tinytoddstherapycare.com/"
+        url="https://tinytoddstherapycare.com/"
+      />
+      <LocalBusinessSchema />
+
       <AnimatePresence mode="wait">
         {isLoading && <LoadingScreen key="loading" />}
       </AnimatePresence>
@@ -62,12 +68,6 @@ const Index = () => {
         <Footer />
         <RocketScrollToTop />
         <WhatsAppButton />
-        <SEO
-          title="Tiny Todds Therapy Care | Autism Therapy Center in Chennai"
-          description="Tiny Todds Therapy Care offers autism therapy, speech therapy, occupational therapy, behavioral therapy, early intervention, and child development support in Chennai."
-          canonical={`${BASE_URL}/`}
-        />
-        <LocalBusinessSchema />
       </main>
     </>
   );
