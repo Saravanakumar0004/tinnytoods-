@@ -11,13 +11,11 @@ import SEO from "@/component/Seo";
 const VideosPage = () => {
   return (
     <>
-      {/* ✅ SEO outside <main> so Helmet injects into <head> */}
+      {/* SEO outside <main> so Helmet injects into <head> correctly */}
       <SEO
         title="Autism Therapy Videos | Tiny Todds Therapy Care Chennai"
         description="Watch Speech Therapy, Occupational Therapy, Behavioral Therapy guidance videos and autism awareness content from Tiny Todds Therapy Care, Chennai."
-        // ✅ FIXED: use absolute URL, not BASE_URL which gives wrong path in production
-        canonical="https://tinytoddstherapycare.com/videos"
-        url="https://tinytoddstherapycare.com/videos"
+        path="/videos"
       />
 
       <main className="min-h-screen bg-background overflow-x-hidden relative">

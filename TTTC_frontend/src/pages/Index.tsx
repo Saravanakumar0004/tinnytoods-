@@ -1,3 +1,4 @@
+// src/pages/Index.tsx
 import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
@@ -39,12 +40,11 @@ const Index = () => {
 
   return (
     <>
-      {/* SEO must be outside <main> so Helmet injects into <head> correctly */}
+      {/* SEO outside <main> so Helmet injects into <head> correctly */}
       <SEO
         title="Tiny Todds Therapy Care | Autism & Child Therapy Center in Chennai"
         description="Tiny Todds Therapy Care offers Speech Therapy, Occupational Therapy, Behavioral Therapy, Early Intervention, Special Education & Parent Training in Chennai."
-        canonical="https://tinytoddstherapycare.com/"
-        url="https://tinytoddstherapycare.com/"
+        path="/"
       />
       <LocalBusinessSchema />
 
