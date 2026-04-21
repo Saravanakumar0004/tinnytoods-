@@ -5,7 +5,6 @@ import {
   ChevronLeft,
   ChevronRight,
   Sparkles,
-  Heart,
   Star,
   ExternalLink,
 } from "lucide-react";
@@ -35,7 +34,6 @@ const getCategoryBadgeClass = (slug?: string) =>
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
   const [filter, setFilter] = useState<string>("all");
-  const [likedImages, setLikedImages] = useState<number[]>([]);
   const [categories, setCategories] = useState<GalleryCategory[]>([]);
   const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
   const [loading, setLoading] = useState(true);
@@ -126,14 +124,6 @@ const Gallery = () => {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [selectedImage, photos]);
-
-  // ── like toggle ─────────────────────────────────────────────────────────────
-  const toggleLike = (id: number, e: React.MouseEvent) => {
-    e.stopPropagation();
-    setLikedImages((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
-    );
-  };
 
   const selectedImageData = photos.find((img) => img.id === selectedImage);
 
@@ -293,7 +283,7 @@ const Gallery = () => {
                   onClick={() => setSelectedImage(image.id)}
                   className="cursor-pointer group relative"
                 >
-                  {/* Card — uniform 4:3 aspect, no row-span */}
+                  {/* Card — uniform 4:3 aspect */}
                   <div
                     className="relative overflow-hidden rounded-2xl shadow-soft group-hover:shadow-float transition-shadow duration-500"
                     style={{ aspectRatio: "4/3" }}
@@ -318,22 +308,6 @@ const Gallery = () => {
                       {image.category?.name}
                     </div>
 
-                    {/* Like button */}
-                    <motion.button
-                      onClick={(e) => toggleLike(image.id, e)}
-                      whileHover={{ scale: 1.2 }}
-                      whileTap={{ scale: 0.9 }}
-                      className="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-md"
-                    >
-                      <Heart
-                        className={`w-4 h-4 transition-colors ${
-                          likedImages.includes(image.id)
-                            ? "text-destructive fill-destructive"
-                            : "text-muted-foreground"
-                        }`}
-                      />
-                    </motion.button>
-
                     {/* Title + description overlay */}
                     <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 opacity-0 group-hover:opacity-100 transition-opacity">
                       <h3 className="text-white font-heading font-bold text-sm md:text-base line-clamp-1">
@@ -356,25 +330,6 @@ const Gallery = () => {
             </AnimatePresence>
           </motion.div>
         )}
-
-        {/* ── LIGHTBOX ──────────────────────────────────────────────────────
-         *
-         * FIXES APPLIED:
-         *   1. style={{ zIndex: 99999 }} on the backdrop — ensures the lightbox
-         *      renders ABOVE the sticky/fixed navbar (which typically uses
-         *      z-index 50–100). Tailwind's z-50 class resolves to z-index:50
-         *      which is lower than most navbars.
-         *
-         *   2. Every interactive element (close btn, prev, next, content div)
-         *      uses e.stopPropagation() so clicks inside don't bubble up to
-         *      the backdrop's onClick and accidentally close the lightbox.
-         *
-         *   3. Close button uses BOTH e.stopPropagation() AND calls
-         *      closeLightbox() explicitly — belt-and-suspenders approach.
-         *
-         *   4. Added a visible "← Back" text button in the top-left as a
-         *      clear, accessible exit affordance in addition to the X icon.
-         * ─────────────────────────────────────────────────────────────────── */}
       </div>
 
       {/* Lightbox rendered OUTSIDE the container div so nothing clips it */}
@@ -388,7 +343,7 @@ const Gallery = () => {
             style={{
               position: "fixed",
               inset: 0,
-              zIndex: 99999,          /* ← Above navbar */
+              zIndex: 99999,
               backgroundColor: "rgba(0,0,0,0.93)",
               backdropFilter: "blur(12px)",
               display: "flex",
@@ -397,7 +352,7 @@ const Gallery = () => {
               padding: "1rem",
             }}
           >
-            {/* ── Top bar: Back button (left) + Close button (right) ── */}
+            {/* ── Top bar ── */}
             <div
               style={{
                 position: "absolute",
@@ -412,7 +367,6 @@ const Gallery = () => {
               }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Back / Cancel button */}
               <motion.button
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -438,8 +392,6 @@ const Gallery = () => {
                 <ChevronLeft style={{ width: 16, height: 16 }} />
                 Back
               </motion.button>
-
-
             </div>
 
             {/* ── Prev arrow ── */}
@@ -509,7 +461,7 @@ const Gallery = () => {
                 maxWidth: 860,
                 width: "100%",
                 zIndex: 100000,
-                marginTop: "4rem", /* space for top bar */
+                marginTop: "4rem",
               }}
             >
               {/* Image */}
@@ -590,8 +542,6 @@ const Gallery = () => {
                   {photos.findIndex((p) => p.id === selectedImage) + 1} /{" "}
                   {photos.length}
                 </p>
-
-
               </motion.div>
             </motion.div>
           </motion.div>
