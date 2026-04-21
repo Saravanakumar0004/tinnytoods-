@@ -1,3 +1,4 @@
+// src/component/Viedos.tsx
 import Header from "@/components/Header";
 import YouTubeSection from "@/components/YouTubeSection";
 import Footer from "@/components/Footer";
@@ -6,29 +7,33 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import ParticleBackground from "@/components/ParticleBackground";
 import WaterWaveEffect from "@/components/WaterWaveEffect";
 import SEO from "@/component/Seo";
-const BASE_URL = import.meta.env.BASE_URL;
 
 const VideosPage = () => {
   return (
-    <main className="min-h-screen bg-background overflow-x-hidden relative">
+    <>
+      {/* ✅ SEO outside <main> so Helmet injects into <head> */}
       <SEO
-        title="Autism Therapy Videos | Tiny Todds Therapy Care"
-        description="Watch autism awareness videos, therapy guidance, child development content, and educational resources from Tiny Todds Therapy Care."
-        canonical={`${BASE_URL}/videos`}
+        title="Autism Therapy Videos | Tiny Todds Therapy Care Chennai"
+        description="Watch Speech Therapy, Occupational Therapy, Behavioral Therapy guidance videos and autism awareness content from Tiny Todds Therapy Care, Chennai."
+        // ✅ FIXED: use absolute URL, not BASE_URL which gives wrong path in production
+        canonical="https://tinytoddstherapycare.com/videos"
+        url="https://tinytoddstherapycare.com/videos"
       />
 
-      <WaterWaveEffect />
-      <ParticleBackground />
-      <Header />
+      <main className="min-h-screen bg-background overflow-x-hidden relative">
+        <WaterWaveEffect />
+        <ParticleBackground />
+        <Header />
 
-      <div className="pt-[120px] md:pt-[130px]">
-        <YouTubeSection />
-      </div>
+        <div className="pt-[120px] md:pt-[130px]">
+          <YouTubeSection />
+        </div>
 
-      <Footer />
-      <RocketScrollToTop />
-      <WhatsAppButton />
-    </main>
+        <Footer />
+        <RocketScrollToTop />
+        <WhatsAppButton />
+      </main>
+    </>
   );
 };
 
