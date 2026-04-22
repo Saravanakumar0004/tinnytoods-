@@ -26,21 +26,27 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        {/* ✅ FIX: Added future flags to silence React Router v7 upgrade warnings */}
+        <BrowserRouter
+          future={{
+            v7_startTransition: true,
+            v7_relativeSplatPath: true,
+          }}
+        >
           <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/about-us" element={<AboutUs />} />
-            <Route path="/about-autism" element={<AboutAutism />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/quiz" element={<AutismQuizPage />} />
-            <Route path="/branches" element={<BranchesPage />} />
-            <Route path="/gallery" element={<GalleryPage />} />
-            <Route path="/videos" element={<VideosPage />} />
-            <Route path="/booking" element={<AppointmentBookingPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
-            <Route path="/admin" element={<AdminPanel />} />
-            <Route path="*" element={<NotFound />} />
+            <Route path="/"              element={<Index />} />
+            <Route path="/about-us"      element={<AboutUs />} />
+            <Route path="/about-autism"  element={<AboutAutism />} />
+            <Route path="/services"      element={<ServicesPage />} />
+            <Route path="/quiz"          element={<AutismQuizPage />} />
+            <Route path="/branches"      element={<BranchesPage />} />
+            <Route path="/gallery"       element={<GalleryPage />} />
+            <Route path="/videos"        element={<VideosPage />} />
+            <Route path="/booking"       element={<AppointmentBookingPage />} />
+            <Route path="/contact"       element={<ContactPage />} />
+            <Route path="/admin/login"   element={<AdminLogin />} />
+            <Route path="/admin"         element={<AdminPanel />} />
+            <Route path="*"              element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
