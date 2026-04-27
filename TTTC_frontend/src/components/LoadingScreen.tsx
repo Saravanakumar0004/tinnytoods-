@@ -18,7 +18,7 @@ const LoadingScreen = () => {
       transition={{ duration: 0.5, ease: "easeInOut" }}
       className="fixed inset-0 z-[100] bg-background flex flex-col items-center justify-center overflow-hidden"
     >
-      {/* Animated background blobs */}
+     
       <motion.div
         animate={{ 
           scale: [1, 1.5, 1],
@@ -44,7 +44,7 @@ const LoadingScreen = () => {
         className="absolute w-[400px] h-[400px] bg-sky/10 rounded-full blur-3xl"
       />
 
-      {/* Floating icons around */}
+     
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(12)].map((_, i) => {
           const IconComp = icons[i % icons.length].Icon;
@@ -92,14 +92,14 @@ const LoadingScreen = () => {
         })}
       </div>
 
-      {/* Center content */}
+      
       <motion.div
         initial={{ scale: 0.5, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.6, ease: "backOut" }}
         className="relative z-10 flex flex-col items-center"
       >
-        {/* Logo */}
+       
         <motion.div
           animate={{ 
             y: [0, -15, 0],
@@ -114,7 +114,7 @@ const LoadingScreen = () => {
           />
         </motion.div>
 
-        {/* Loading text */}
+        
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -129,7 +129,7 @@ const LoadingScreen = () => {
           </motion.span>
         </motion.p>
 
-        {/* Animated dots */}
+        
         <div className="flex gap-2 mt-4">
           {[0, 1, 2].map((i) => (
             <motion.div
@@ -153,7 +153,7 @@ const LoadingScreen = () => {
           ))}
         </div>
 
-        {/* Rainbow progress bar */}
+        
         <motion.div
           className="mt-8 w-48 h-2 rounded-full bg-muted overflow-hidden"
         >
@@ -173,7 +173,7 @@ const LoadingScreen = () => {
         </motion.div>
       </motion.div>
 
-      {/* Bottom wave decoration */}
+     
       <motion.svg
         className="absolute bottom-0 left-0 w-full"
         viewBox="0 0 1440 120"

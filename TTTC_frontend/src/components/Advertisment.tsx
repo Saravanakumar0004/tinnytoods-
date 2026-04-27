@@ -65,7 +65,7 @@ const Advertisement = () => {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {/* Outer shell: bg image + dark overlay */}
+    
       <div
         onClick={() => window.open("https://ttss-frontend.vercel.app/", "_blank")}
         className="relative rounded-3xl overflow-hidden cursor-pointer"
@@ -75,12 +75,12 @@ const Advertisement = () => {
           backgroundPosition: "center",
         }}
       >
-        {/* Dark overlay keeps text legible over any bg image */}
+        
         <div className="absolute inset-0 bg-[rgba(8,6,30,0.72)]" />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8 p-6 sm:p-8 md:p-10">
 
-          {/* LEFT */}
+       
           <div className="text-center lg:text-left lg:max-w-lg">
             <div className="inline-flex items-center gap-2 bg-yellow-400/10 border border-yellow-400/25 rounded-full px-3.5 py-1.5 mb-4">
               <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
@@ -110,9 +110,9 @@ const Advertisement = () => {
             </button>
           </div>
 
-          {/* RIGHT: 3-D card stack */}
+          
           <div className="w-full lg:w-[480px] flex-shrink-0">
-            {/* perspective on parent gives rotateY real depth */}
+            
             <div
               className="relative h-[200px] sm:h-[210px] flex items-center justify-center"
               style={{ perspective: "900px" }}
@@ -155,14 +155,14 @@ const Advertisement = () => {
                                border border-white/20 shadow-2xl"
                     style={{ transformStyle: "preserve-3d" }}
                   >
-                    {/* Card image */}
+                   
                     <img
                       src={card.image}
                       alt={card.title}
                       className="absolute inset-0 w-full h-full object-cover"
                     />
 
-                    {/* Gradient scrim over the image */}
+                    
                     <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
 
                     {/* Label */}

@@ -110,13 +110,13 @@ const AutismQuiz = () => {
       adhdTotal += option.adhdScore;
     });
 
-    const maxAutism = 30; // Max possible autism score
-    const maxAdhd = 25; // Max possible ADHD score
+    const maxAutism = 30; 
+    const maxAdhd = 25; 
 
     const autismPercentage = Math.round((autismTotal / maxAutism) * 100);
     const adhdPercentage = Math.round((adhdTotal / maxAdhd) * 100);
 
-    // Normalize to total 100% if both are present
+    
     const total = autismPercentage + adhdPercentage;
     if (total > 0) {
       const normalizedAutism = Math.round((autismPercentage / total) * 100);
@@ -139,7 +139,7 @@ const AutismQuiz = () => {
 
   return (
     <section id="quiz" className="py-10 bg-mint-gradient relative overflow-hidden">
-      {/* Background decorations */}
+      
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
@@ -151,7 +151,7 @@ const AutismQuiz = () => {
         className="absolute bottom-20 left-20 w-80 h-80 bg-accent/20 rounded-full blur-3xl"
       />
 
-      {/* Floating icons */}
+  
       <motion.div
         animate={{ y: [-15, 15, -15], rotate: [-5, 5, -5] }}
         transition={{ duration: 6, repeat: Infinity }}
@@ -168,7 +168,7 @@ const AutismQuiz = () => {
       </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
+      
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -196,7 +196,7 @@ const AutismQuiz = () => {
           </p>
         </motion.div>
 
-        {/* Quiz Card */}
+       
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -204,7 +204,7 @@ const AutismQuiz = () => {
           className="max-w-3xl mx-auto"
         >
           <div className="bg-card rounded-3xl shadow-float p-8 md:p-12 border border-border/50 relative overflow-hidden">
-            {/* Decorative corner */}
+            
             <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full" />
             
             <AnimatePresence mode="wait">
@@ -216,7 +216,7 @@ const AutismQuiz = () => {
                   exit={{ opacity: 0, x: -50 }}
                   transition={{ duration: 0.3 }}
                 >
-                  {/* Progress bar */}
+                 
                   <div className="mb-8">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-sm font-medium text-muted-foreground">
@@ -233,12 +233,12 @@ const AutismQuiz = () => {
                     </div>
                   </div>
 
-                  {/* Question */}
+                 
                   <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground mb-8">
                     {questions[currentQuestion].question}
                   </h3>
 
-                  {/* Options */}
+                 
                   <div className="space-y-4 mb-8">
                     {questions[currentQuestion].options.map((option, index) => (
                       <motion.button
@@ -274,7 +274,7 @@ const AutismQuiz = () => {
                     ))}
                   </div>
 
-                  {/* Next button */}
+                 
                   <Button
                     variant="playful"
                     size="xl"
@@ -311,9 +311,9 @@ const AutismQuiz = () => {
                     Based on your answers, here's a preliminary indication:
                   </p>
 
-                  {/* Results visualization */}
+                  
                   <div className="grid md:grid-cols-2 gap-6 mb-8">
-                    {/* Autism indicator */}
+                   
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -357,7 +357,7 @@ const AutismQuiz = () => {
                       </div>
                     </motion.div>
 
-                    {/* ADHD indicator */}
+                  
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -402,7 +402,6 @@ const AutismQuiz = () => {
                     </motion.div>
                   </div>
 
-                  {/* Disclaimer */}
                   <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -416,7 +415,7 @@ const AutismQuiz = () => {
                     </p>
                   </motion.div>
 
-                  {/* Action buttons */}
+               
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <Button
                       variant="outline"
@@ -444,7 +443,7 @@ const AutismQuiz = () => {
           </div>
         </motion.div>
 
-        {/* Bottom decoration */}
+   
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

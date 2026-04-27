@@ -43,7 +43,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-foreground text-background">
-      {/* Wave divider */}
+      
       <div className="w-full leading-none">
         <svg viewBox="0 0 1440 32" fill="none" className="w-full block">
           <path
@@ -56,7 +56,7 @@ const Footer = () => {
       <div className="container mx-auto px-6 pt-6 pb-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-5">
 
-          {/* Brand */}
+          
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-2 mb-2">
               <img src={logo} alt="Tiny Todds" className="h-10 w-auto rounded-sm" />
@@ -70,7 +70,7 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Quick Links — split into 2 columns */}
+         
           <div>
             <h4 className="font-heading font-semibold text-xs text-background/80 uppercase tracking-wide mb-3">
               Quick Links
@@ -86,7 +86,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="pt-[1.35rem]"> {/* aligns with first link row */}
+          <div className="pt-[1.35rem]"> 
             <ul className="space-y-1.5">
               {LINKS.slice(5).map(({ to, label }) => (
                 <li key={to}>
@@ -98,7 +98,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Contact */}
+          
           <div>
             <h4 className="font-heading font-semibold text-xs text-background/80 uppercase tracking-wide mb-3">
               Contact
@@ -121,7 +121,7 @@ const Footer = () => {
 
         </div>
 
-        {/* Bottom bar */}
+        
         <div className="pt-4 border-t border-background/10 flex flex-col sm:flex-row items-center justify-between gap-1">
           <p className="text-background/40 text-[11px] flex items-center gap-1">
             Made with <Heart className="w-3 h-3 text-primary fill-current" /> for children everywhere

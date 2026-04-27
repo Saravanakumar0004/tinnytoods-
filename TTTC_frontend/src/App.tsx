@@ -26,7 +26,6 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        {/* ✅ FIX: Added future flags to silence React Router v7 upgrade warnings */}
         <BrowserRouter
           future={{
             v7_startTransition: true,

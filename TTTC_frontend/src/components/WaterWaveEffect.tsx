@@ -22,11 +22,11 @@ const WaterWaveEffect = () => {
   }, []);
 
   useEffect(() => {
-    // Disable on mobile to prevent lag
+    
     if (isMobile) return;
 
     let lastTime = 0;
-    const throttleMs = 150; // Increased throttle for better performance
+    const throttleMs = 150; 
 
     const handleMove = (e: MouseEvent) => {
       const now = Date.now();
@@ -49,7 +49,7 @@ const WaterWaveEffect = () => {
     };
   }, [createRipple, isMobile]);
 
-  // Don't render on mobile
+ 
   if (isMobile) return null;
 
   return (

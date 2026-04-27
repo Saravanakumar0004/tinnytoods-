@@ -123,7 +123,7 @@ const AppointmentBooking = () => {
         description: "Redirecting to WhatsApp to confirm your appointment.",
       });
 
-      // Construct WhatsApp message with all details
+    
 
       const phoneNumber = "919941350646";
       const message = `🗓️ *New Appointment Request*
@@ -141,7 +141,7 @@ const AppointmentBooking = () => {
       window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, "_blank");
       setIsSubmitted(true)
 
-      // Reset after delay
+   
       setTimeout(() => {
       setIsSubmitted(false);
       setDate(undefined);
@@ -166,7 +166,7 @@ const AppointmentBooking = () => {
 
   return (
     <section id="booking" className="py-10 bg-card relative overflow-hidden">
-      {/* Decorative elements */}
+  
       <div className="absolute top-20 right-20 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-10 left-10 w-60 h-60 bg-secondary/10 rounded-full blur-3xl" />
       
@@ -216,7 +216,7 @@ const AppointmentBooking = () => {
           ) : (
             <form onSubmit={handleSubmit} className="glass-card rounded-3xl p-8 md:p-10">
               <div className="grid md:grid-cols-2 gap-8">
-                {/* Left Column - Date & Time */}
+               
                 <div className="space-y-6">
                   <div>
                     <label className="text-sm font-medium text-foreground mb-3 flex items-center gap-2">
@@ -352,7 +352,7 @@ const AppointmentBooking = () => {
                   </div>
                 </div>
 
-                {/* Right Column - Contact Info */}
+                
                 <div className="space-y-4">
                   <div className="grid grid-cols-2 gap-4">
                     <div>

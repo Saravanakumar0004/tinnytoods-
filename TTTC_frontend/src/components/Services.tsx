@@ -8,14 +8,13 @@ import {
 import { getservices, type Services } from "@/services/modules/services.api";
 import { useEffect, useMemo, useState } from "react";
 
-// Icon mapping (matching the icons in your first code)
+
 const ICONS: Record<string, LucideIcon> = {
   Eye, Target, HandHeart, Brain, Puzzle, Ear, Activity, Sparkles, Lightbulb,
   Baby, Users, Smile, Star, Stethoscope, HeartPulse, HelpingHand,
   GraduationCap, Mic, BookOpen, HelpCircle
 };
 
-// Style presets (keep as in first code, but we'll use them with animations)
 const STYLE_PRESETS = [
   { color: "bg-primary/20", iconColor: "text-secondary-foreground" },
   { color: "bg-lavender", iconColor: "text-lavender-foreground" },
@@ -27,7 +26,6 @@ const STYLE_PRESETS = [
   { color: "bg-accent/90", iconColor: "text-accent-foreground" },
 ];
 
-// Animation variants (from advanced code)
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -61,7 +59,7 @@ const Services = () => {
   const [loading, setLoading] = useState(true);
   const sectionRef = useRef<HTMLElement>(null);
 
-  // Parallax scroll effect for background blobs
+ 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"]
@@ -114,7 +112,7 @@ const Services = () => {
       id="services" 
       className="py-20 bg-card relative overflow-hidden"
     >
-      {/* Animated background blobs with parallax */}
+     
       <motion.div 
         style={{ y: blobY }}
         className="absolute top-20 right-0 w-64 h-64 bg-secondary/20 rounded-full blur-3xl"
@@ -125,7 +123,7 @@ const Services = () => {
       />
       
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header with enhanced animations */}
+        
         <motion.div
           variants={headerVariants}
           initial="hidden"
@@ -152,7 +150,7 @@ const Services = () => {
           </p>
         </motion.div>
 
-        {/* Services Grid with staggered cards */}
+        
         <motion.div
           variants={containerVariants}
           initial="hidden"
@@ -169,7 +167,7 @@ const Services = () => {
                 className="group"
               >
                 <div className="bg-background rounded-2xl p-6 h-full shadow-soft hover:shadow-float transition-all duration-300 border border-border/50">
-                  {/* Icon with animation */}
+                  
                   <motion.div
                     whileHover={{ scale: 1.1, rotate: 5 }}
                     transition={{ type: "spring", stiffness: 400 }}
@@ -178,7 +176,7 @@ const Services = () => {
                     <service.Icon className={`w-7 h-7 ${service.iconColor} transition-transform group-hover:scale-110`} />
                   </motion.div>
 
-                  {/* Content - text always visible */}
+                  
                   <h3 className="font-heading font-semibold text-lg text-foreground mb-2 group-hover:text-primary transition-colors">
                     {service.title}
                   </h3>

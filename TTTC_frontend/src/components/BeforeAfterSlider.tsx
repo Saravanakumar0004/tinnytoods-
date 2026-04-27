@@ -53,7 +53,7 @@ const BeforeAfterSlider = () => {
 
   return (
     <section className="py-10 bg-card relative overflow-hidden">
-      {/* Decorative elements */}
+     
       <div className="absolute top-10 left-10 w-64 h-64 bg-success/10 rounded-full blur-3xl" />
       <div className="absolute bottom-10 right-10 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
       
@@ -88,14 +88,14 @@ const BeforeAfterSlider = () => {
                 {comparison.title}
               </h3>
               
-              {/* Comparison container */}
+             
               <div
                 ref={(el) => (containerRefs.current[index] = el)}
                 className="relative h-64 rounded-xl overflow-hidden touch-one"
               >
 
 
-                {/* Before side - clips from left as slider moves right */}
+               
                 <div 
                   className="absolute inset-0 bg-gradient-to-br from-destructive/20 to-destructive/10 p-4 flex flex-col"
                   style={{ clipPath: `inset(0 ${sliderPositions[index]}% 0 0)` }}
@@ -113,7 +113,7 @@ const BeforeAfterSlider = () => {
                   </ul>
                 </div>
 
-                {/* After side - clips from right as slider moves left */}
+                
                 <div 
                   className="absolute inset-0 bg-gradient-to-br from-success/20 to-success/10 p-4 flex flex-col"
                   style={{ clipPath: `inset(0 0 0 ${100 - sliderPositions[index]}%)` }}
@@ -131,7 +131,7 @@ const BeforeAfterSlider = () => {
                   </ul>
                 </div>
 
-                {/* Slider handle - positioned at the boundary */}
+              
                 <div 
                   className="absolute top-0 bottom-0 w-1 bg-white shadow-lg z-10"
                              
@@ -172,7 +172,7 @@ const BeforeAfterSlider = () => {
                 </div>
               </div>
 
-              {/* Slider input */}
+             
               
               <p className="text-xs text-center text-muted-foreground mt-2">
                 ← Drag to compare →
@@ -181,7 +181,7 @@ const BeforeAfterSlider = () => {
           ))}
         </div>
 
-        {/* Disclaimer */}
+       
         <motion.p
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}

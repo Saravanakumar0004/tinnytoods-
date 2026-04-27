@@ -16,7 +16,7 @@ import {
   type GalleryPhoto,
 } from "@/services/modules/gallery.api";
 
-// ── category badge colours ────────────────────────────────────────────────────
+
 const categoryColors: Record<string, string> = {
   Therapy: "bg-primary text-primary-foreground",
   Facilities: "bg-sky text-sky-foreground",
@@ -29,7 +29,7 @@ const getCategoryBadgeClass = (slug?: string) =>
   categoryColors[slug ?? ""] ??
   "bg-card text-foreground border border-border";
 
-// ─────────────────────────────────────────────────────────────────────────────
+
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
@@ -41,7 +41,7 @@ const Gallery = () => {
 
   const cacheRef = useRef<Record<string, GalleryPhoto[]>>({});
 
-  // ── initial load ────────────────────────────────────────────────────────────
+
   useEffect(() => {
     (async () => {
       try {
@@ -61,7 +61,7 @@ const Gallery = () => {
     })();
   }, []);
 
-  // ── category buttons ────────────────────────────────────────────────────────
+
   const categoryButtons = useMemo(
     () => [
       { label: "All", value: "all" },
@@ -70,7 +70,7 @@ const Gallery = () => {
     [categories]
   );
 
-  // ── filter handler ──────────────────────────────────────────────────────────
+
   const handleCategoryClick = async (slug: string) => {
     setFilter(slug);
     setSelectedImage(null);
@@ -98,7 +98,7 @@ const Gallery = () => {
     }
   };
 
-  // ── lightbox navigation ─────────────────────────────────────────────────────
+
   const handlePrev = () => {
     if (selectedImage === null) return;
     const idx = photos.findIndex((img) => img.id === selectedImage);
@@ -113,7 +113,7 @@ const Gallery = () => {
     setSelectedImage(photos[next].id);
   };
 
-  // ── keyboard navigation ─────────────────────────────────────────────────────
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (selectedImage === null) return;
@@ -127,16 +127,14 @@ const Gallery = () => {
 
   const selectedImageData = photos.find((img) => img.id === selectedImage);
 
-  // ── close lightbox ──────────────────────────────────────────────────────────
   const closeLightbox = () => setSelectedImage(null);
 
-  // ─────────────────────────────────────────────────────────────────────────────
   return (
     <section
       id="gallery"
       className="py-10 md:py-24 bg-background relative overflow-hidden"
     >
-      {/* Background blobs */}
+     
       <motion.div
         animate={{ scale: [1, 1.2, 1], rotate: [0, 180, 360] }}
         transition={{ duration: 30, repeat: Infinity }}
@@ -148,7 +146,7 @@ const Gallery = () => {
         className="absolute bottom-20 left-20 w-60 h-60 bg-accent/10 rounded-full blur-3xl pointer-events-none"
       />
 
-      {/* Floating icons */}
+      
       <motion.div
         animate={{ y: [-10, 10, -10], rotate: [-10, 10, -10] }}
         transition={{ duration: 5, repeat: Infinity }}
@@ -166,7 +164,7 @@ const Gallery = () => {
 
       <div className="container mx-auto px-4 relative z-10">
 
-        {/* Section header */}
+       
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -193,7 +191,7 @@ const Gallery = () => {
           </p>
         </motion.div>
 
-        {/* Category filter */}
+        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -217,14 +215,14 @@ const Gallery = () => {
           ))}
         </motion.div>
 
-        {/* Error */}
+        
         {error && (
           <div className="mb-6 text-center text-sm text-destructive">
             {error}
           </div>
         )}
 
-        {/* Loading */}
+       
         {loading && (
           <div className="flex justify-center items-center py-16">
             <div className="flex items-center gap-3 text-muted-foreground text-sm">
@@ -252,7 +250,7 @@ const Gallery = () => {
           </div>
         )}
 
-        {/* Empty state */}
+        
         {!loading && !error && photos.length === 0 && (
           <div className="text-center text-muted-foreground py-20 bg-card rounded-2xl border border-border">
             <Images className="w-12 h-12 mx-auto mb-3 opacity-20" />
@@ -260,7 +258,7 @@ const Gallery = () => {
           </div>
         )}
 
-        {/* ── GALLERY GRID ────────────────────────────────────────────────── */}
+        
         {!loading && photos.length > 0 && (
           <motion.div
             layout
@@ -283,12 +281,12 @@ const Gallery = () => {
                   onClick={() => setSelectedImage(image.id)}
                   className="cursor-pointer group relative"
                 >
-                  {/* Card — uniform 4:3 aspect */}
+                  
                   <div
                     className="relative overflow-hidden rounded-2xl shadow-soft group-hover:shadow-float transition-shadow duration-500"
                     style={{ aspectRatio: "4/3" }}
                   >
-                    {/* Photo */}
+                  
                     <img
                       src={image.image_url}
                       alt={image.title || image.category?.name || "Photo"}
@@ -296,10 +294,10 @@ const Gallery = () => {
                       loading="lazy"
                     />
 
-                    {/* Gradient overlay */}
+                   
                     <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
-                    {/* Category badge */}
+                    
                     <div
                       className={`absolute top-3 left-3 px-2 py-1 rounded-full text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity ${getCategoryBadgeClass(
                         image.category?.slug
@@ -308,7 +306,7 @@ const Gallery = () => {
                       {image.category?.name}
                     </div>
 
-                    {/* Title + description overlay */}
+                    
                     <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 opacity-0 group-hover:opacity-100 transition-opacity">
                       <h3 className="text-white font-heading font-bold text-sm md:text-base line-clamp-1">
                         {image.title || image.category?.name}
@@ -318,7 +316,7 @@ const Gallery = () => {
                       </p>
                     </div>
 
-                    {/* Centre view icon */}
+                    
                     <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                       <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center">
                         <ExternalLink className="w-5 h-5 text-white" />
@@ -332,7 +330,7 @@ const Gallery = () => {
         )}
       </div>
 
-      {/* Lightbox rendered OUTSIDE the container div so nothing clips it */}
+     
       <AnimatePresence>
         {selectedImage !== null && selectedImageData && (
           <motion.div
@@ -352,7 +350,7 @@ const Gallery = () => {
               padding: "1rem",
             }}
           >
-            {/* ── Top bar ── */}
+           
             <div
               style={{
                 position: "absolute",
@@ -394,7 +392,7 @@ const Gallery = () => {
               </motion.button>
             </div>
 
-            {/* ── Prev arrow ── */}
+          
             <motion.button
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -422,7 +420,7 @@ const Gallery = () => {
               <ChevronLeft style={{ width: 28, height: 28, color: "#fff" }} />
             </motion.button>
 
-            {/* ── Next arrow ── */}
+           
             <motion.button
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -450,7 +448,7 @@ const Gallery = () => {
               <ChevronRight style={{ width: 28, height: 28, color: "#fff" }} />
             </motion.button>
 
-            {/* ── Image + details card ── */}
+            
             <motion.div
               initial={{ scale: 0.85, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -464,7 +462,7 @@ const Gallery = () => {
                 marginTop: "4rem",
               }}
             >
-              {/* Image */}
+              
               <div
                 style={{
                   position: "relative",
@@ -481,7 +479,7 @@ const Gallery = () => {
                 />
               </div>
 
-              {/* Info */}
+            
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -531,7 +529,7 @@ const Gallery = () => {
                   {selectedImageData.category?.name}
                 </span>
 
-                {/* Counter */}
+               
                 <p
                   style={{
                     color: "rgba(255,255,255,0.35)",

@@ -24,7 +24,7 @@ const YouTubeSection = () => {
         const res = await getyoutube();
 
         const mapped = res
-          .filter(v => v.video_id) // safety
+          .filter(v => v.video_id) 
           .map(v => ({
             id: v.video_id,
             title: v.title,
@@ -195,7 +195,7 @@ const YouTubeSection = () => {
 
         <div className="relative px-10 py-10">
 
-        {/* LEFT ARROW */}
+       
         <button
           onClick={scrollPrev}
           className="absolute left-2 md:-left-3 top-1/2 -translate-y-1/2 z-20
@@ -206,7 +206,7 @@ const YouTubeSection = () => {
           <ChevronLeft className="w-8 h-8 md:w-8 md:h-8 text-white"/>
         </button>
 
-        {/* RIGHT ARROW */}
+       
         <button
           onClick={scrollNext}
           className="absolute right-2 md:-right-3 top-1/2 -translate-y-1/2 z-20
@@ -217,7 +217,7 @@ const YouTubeSection = () => {
           <ChevronRight className="w-8 h-8 md:w-8 md:h-8 text-white"/>
         </button>
 
-        {/* SLIDER WINDOW */}
+        
         <div className="w-full">
           <div
             ref={sliderRef}
@@ -244,7 +244,7 @@ const YouTubeSection = () => {
                   md:w-auto md:basis-1/3
                 "
               >
-                {/* CARD — your existing card EXACTLY same */}
+                
                 <div className="bg-primary/10 rounded-3xl overflow-hidden shadow-soft hover:shadow-float transition-all duration-500 border border-border/100">
                   <div className="relative aspect-video overflow-hidden bg-gray-100">
                     <img
@@ -272,7 +272,7 @@ const YouTubeSection = () => {
                     </h3>
                     <div className="flex items-center gap-2 text-muted-foreground text-sm">
                       <Youtube className="w-4 h-4 text-destructive" />
-                      {/* <span>{video.views}</span> */}
+                      
                     </div>
                   </div>
                 </div>

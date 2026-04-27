@@ -38,23 +38,23 @@ const ScrollToTop = () => {
           className="fixed bottom-8 right-8 z-50 group"
           aria-label="Scroll to top"
         >
-          {/* Outer glow ring */}
+         
           <motion.div
             animate={{ scale: [1, 1.2, 1] }}
             transition={{ duration: 2, repeat: Infinity }}
             className="absolute inset-0 bg-primary/20 rounded-full blur-lg"
           />
           
-          {/* Main button */}
+          
           <div className="relative w-14 h-14 bg-gradient-to-br from-primary to-accent rounded-full flex items-center justify-center shadow-float overflow-hidden">
-            {/* Inner shine effect */}
+            
             <motion.div
               animate={{ rotate: 360 }}
               transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
             />
             
-            {/* Arrow icon */}
+            
             <motion.div
               animate={{ y: [2, -2, 2] }}
               transition={{ duration: 1.5, repeat: Infinity }}
@@ -63,7 +63,7 @@ const ScrollToTop = () => {
             </motion.div>
           </div>
 
-          {/* Sparkle decoration */}
+          
           <motion.div
             animate={{ rotate: 360, scale: [1, 1.2, 1] }}
             transition={{ duration: 3, repeat: Infinity }}
@@ -72,7 +72,7 @@ const ScrollToTop = () => {
             <Sparkles className="w-4 h-4" />
           </motion.div>
 
-          {/* Tooltip */}
+          
           <motion.span
             initial={{ opacity: 0, x: 10 }}
             whileHover={{ opacity: 1, x: 0 }}

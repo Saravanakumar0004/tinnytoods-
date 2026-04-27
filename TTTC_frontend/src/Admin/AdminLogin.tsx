@@ -63,7 +63,7 @@ export default function AdminLogin() {
 
   return (
     <>
-      {/* ===== SEO BLOCK ===== */}
+  
       <Helmet>
         <title>Admin Login</title>
         <meta name="robots" content="noindex, nofollow" />

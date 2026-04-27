@@ -40,7 +40,7 @@ const Index = () => {
 
   return (
     <>
-      {/* SEO outside <main> so Helmet injects into <head> correctly */}
+      
       <SEO
         title="Tiny Todds Therapy Care | Autism & Child Therapy Center in Chennai"
         description="Tiny Todds Therapy Care offers Speech Therapy, Occupational Therapy, Behavioral Therapy, Early Intervention, Special Education & Parent Training in Chennai."

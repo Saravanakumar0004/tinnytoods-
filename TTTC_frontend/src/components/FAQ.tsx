@@ -32,7 +32,7 @@ const FAQ = () => {
 
   return (
     <section id="faq" className="py-10 bg-background relative overflow-hidden">
-      {/* Decorative elements */}
+     
       <div className="absolute top-0 right-0 w-96 h-96 bg-lavender/20 rounded-full blur-3xl -translate-y-1/2" />
       <div className="absolute bottom-0 left-0 w-72 h-72 bg-sky/20 rounded-full blur-3xl translate-y-1/2" />
       
@@ -94,7 +94,7 @@ const FAQ = () => {
           )}
         </motion.div>
 
-        {/* CTA */}
+       
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}

@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, forwardRef } from "react";
 import { motion, AnimatePresence, useAnimation, HTMLMotionProps } from "framer-motion";
 import { ArrowUp, Sparkles } from "lucide-react";
 
-// Fix for AnimatePresence ref warning
+
 const MotionDiv = forwardRef<HTMLDivElement, HTMLMotionProps<"div">>((props, ref) => (
   <motion.div ref={ref} {...props} />
 ));
@@ -29,20 +29,20 @@ const RocketScrollToTop = () => {
   const launchRocket = useCallback(async () => {
     setIsLaunching(true);
     
-    // Start smoke animation
+  
     smokeControls.start({
       opacity: [0, 1, 1, 1],
       scale: [0.5, 1, 1.5, 2],
       y: [0, 20, 40, 60],
     });
 
-    // Shake before launch
+    
     await rocketControls.start({
       x: [-2, 2, -2, 2, 0],
       transition: { duration: 0.3 },
     });
 
-    // Launch animation
+   
     await rocketControls.start({
       y: -window.innerHeight - 100,
       rotate: 0,
@@ -52,19 +52,19 @@ const RocketScrollToTop = () => {
       },
     });
 
-    // Scroll to top
+   
     window.scrollTo({
       top: 0,
       behavior: "auto",
     });
 
-    // Reset position off-screen
+  
     await rocketControls.set({ y: 100, opacity: 0 });
     
     setIsLaunching(false);
     setIsVisible(false);
     
-    // Reset for next appearance
+
     setTimeout(() => {
       rocketControls.set({ y: 0, opacity: 1, rotate: 0 });
     }, 300);
@@ -79,7 +79,7 @@ const RocketScrollToTop = () => {
           exit={{ opacity: 0, scale: 0, y: 20 }}
           className="fixed bottom-6 right-4 md:bottom-8 md:right-8 z-50"
         >
-          {/* Smoke particles */}
+        
           <AnimatePresence>
             {isLaunching && (
               <>
@@ -116,7 +116,7 @@ const RocketScrollToTop = () => {
                   </motion.div>
                 ))}
                 
-                {/* Fire trail */}
+               
                 {[...Array(5)].map((_, i) => (
                   <motion.div
                     key={`fire-${i}`}
@@ -150,7 +150,7 @@ const RocketScrollToTop = () => {
             )}
           </AnimatePresence>
 
-          {/* Main button / Rocket */}
+          
           <motion.button
             animate={rocketControls}
             onClick={launchRocket}
@@ -160,7 +160,7 @@ const RocketScrollToTop = () => {
             className="relative group"
             aria-label="Scroll to top"
           >
-            {/* Outer glow ring */}
+           
             <motion.div
               animate={!isLaunching ? { scale: [1, 1.2, 1] } : { scale: 1.3, opacity: 0.8 }}
               transition={{ duration: 2, repeat: isLaunching ? 0 : Infinity }}
@@ -171,7 +171,7 @@ const RocketScrollToTop = () => {
               }`}
             />
             
-            {/* Rocket body */}
+            
             <motion.div 
               className={`relative flex items-center justify-center overflow-hidden transition-all duration-300 ${
                 isLaunching 
@@ -187,7 +187,7 @@ const RocketScrollToTop = () => {
                   : "0 10px 30px -10px hsl(var(--primary) / 0.4)",
               }}
             >
-              {/* Inner shine effect */}
+             
               <motion.div
                 animate={!isLaunching ? { rotate: 360 } : {}}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
@@ -196,7 +196,7 @@ const RocketScrollToTop = () => {
               
               <AnimatePresence mode="wait">
                 {isLaunching ? (
-                  // Rocket icon when launching
+                  
                   <motion.div
                     key="rocket"
                     initial={{ scale: 0, rotate: 180 }}
@@ -204,18 +204,18 @@ const RocketScrollToTop = () => {
                     exit={{ scale: 0 }}
                     className="relative z-10 flex flex-col items-center"
                   >
-                    {/* Rocket tip */}
+                    
                     <div className="w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-white/90 mb-1" />
-                    {/* Rocket body window */}
+                    
                     <div className="w-4 h-4 rounded-full bg-sky-200 border-2 border-white/50" />
-                    {/* Rocket fins */}
+                    
                     <div className="flex gap-3 mt-1">
                       <div className="w-2 h-4 bg-white/80 rounded-b-full -skew-x-12" />
                       <div className="w-2 h-4 bg-white/80 rounded-b-full skew-x-12" />
                     </div>
                   </motion.div>
                 ) : (
-                  // Arrow icon when idle
+                  
                   <motion.div
                     key="arrow"
                     initial={{ scale: 0 }}
@@ -232,7 +232,7 @@ const RocketScrollToTop = () => {
               </AnimatePresence>
             </motion.div>
 
-            {/* Sparkle decoration */}
+            
             {!isLaunching && (
               <motion.div
                 animate={{ rotate: 360, scale: [1, 1.2, 1] }}
@@ -243,7 +243,7 @@ const RocketScrollToTop = () => {
               </motion.div>
             )}
 
-            {/* Tooltip */}
+          
             {!isLaunching && (
               <motion.span
                 initial={{ opacity: 0, x: 10 }}
@@ -255,7 +255,7 @@ const RocketScrollToTop = () => {
             )}
           </motion.button>
 
-          {/* Launch text */}
+          
           <AnimatePresence>
             {isLaunching && (
               <motion.div

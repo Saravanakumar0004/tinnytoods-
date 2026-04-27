@@ -137,7 +137,7 @@ const Header = () => {
 
   return (
     <>
-      {/* Top Bar */}
+      
       <div className="fixed top-0 left-0 right-0 z-50">
         <div className="bg-primary text-primary-foreground px-4 py-2">
           <div className="container mx-auto flex items-center justify-between gap-3">
@@ -177,7 +177,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Main Header */}
+      
       <header
         className={`fixed top-[32px] md:top-[34px] left-0 right-0 z-50 bg-card/100 backdrop-blur-md transition-shadow duration-200 ${
           isScrolled ? "shadow-md" : "shadow-soft"
@@ -197,7 +197,7 @@ const Header = () => {
               />
             </Link>
 
-            {/* Desktop Navigation */}
+            
             <nav className="hidden xl:flex items-center gap-3">
               {navLinks
                 .filter(
@@ -209,7 +209,7 @@ const Header = () => {
                 )
                 .map((link) => renderNavItem(link, false))}
 
-              {/* Media Dropdown */}
+             
               <div className="relative group">
                 <button
                   type="button"
@@ -237,7 +237,7 @@ const Header = () => {
                 </div>
               </div>
 
-              {/* Enquiry Dropdown */}
+              
               <div className="relative group">
                 <button
                   type="button"
@@ -266,7 +266,7 @@ const Header = () => {
               </div>
             </nav>
 
-            {/* Desktop CTA */}
+            
             <div className="hidden md:block">
               <Button variant="playful" size="lg" asChild>
                 <a href={phoneHref} onClick={handleCallClick}>
@@ -276,7 +276,7 @@ const Header = () => {
               </Button>
             </div>
 
-            {/* Mobile Menu Toggle */}
+            
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -295,7 +295,7 @@ const Header = () => {
             </motion.button>
           </div>
 
-          {/* Visitors */}
+          
           <div className="fixed top-[23px] right-[58px] sm:top-[30px] sm:right-[30px] md:top-[24px] md:right-[65px] lg:top-[25px] lg:right-[15px] xl:top-[70px] xl:right-[16px] min-[1500px]:right-[calc((100vw-1536px)/2+50px)] 2xl:right-[calc((100vw-1536px)/2+80px)] z-[23] flex items-center">
             <div className="relative bg-success text-white text-[11px] md:text-xs font-semibold px-2 py-1 md:px-3 md:py-2 rounded-l-full shadow">
               <span className="flex items-center gap-1">
@@ -319,7 +319,7 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
+        
         <AnimatePresence>
           {isMenuOpen && (
             <>

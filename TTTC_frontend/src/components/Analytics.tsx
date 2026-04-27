@@ -148,7 +148,7 @@ const Analytics = () => {
   const { stats, loading } = useHome();
   return (
     <section id="analytics" className="py-10 bg-sky-gradient relative overflow-hidden" ref={ref}>
-      {/* Decorative elements */}
+      
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
@@ -160,7 +160,7 @@ const Analytics = () => {
         className="absolute bottom-20 right-10 w-60 h-60 bg-lavender/20 rounded-full blur-3xl"
       />
       
-      {/* Floating icons */}
+      
       <motion.div
         animate={{ y: [-10, 10, -10] }}
         transition={{ duration: 5, repeat: Infinity }}
@@ -177,7 +177,7 @@ const Analytics = () => {
       </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
-        {/* Section Header */}
+        
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -201,7 +201,7 @@ const Analytics = () => {
           </p>
         </motion.div>
 
-        {/* Key Metrics */}
+        
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-16">
           {keyMetrics.map((metric, index) => (
             <motion.div
@@ -232,9 +232,9 @@ const Analytics = () => {
           ))}
         </div>
 
-        {/* Charts Grid */}
+       
         <div className="grid lg:grid-cols-2 gap-8">
-          {/* Bar Chart - Student Growth */}
+         
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -272,7 +272,7 @@ const Analytics = () => {
             </div>
           </motion.div>
 
-          {/* Therapy Distribution */}
+       
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
@@ -310,7 +310,7 @@ const Analytics = () => {
               ))}
             </div>
 
-            {/* Circular indicator */}
+           
             <motion.div
               initial={{ opacity: 0, scale: 0 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
@@ -348,7 +348,7 @@ const Analytics = () => {
           </motion.div>
         </div>
 
-        {/* Bottom Stats */}
+       
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}

@@ -66,7 +66,7 @@ const WhatsAppButton = () => {
           )}
         </motion.div>
         
-        {/* Pulse effect */}
+  
         {!isOpen && (
           <motion.span
             animate={{ scale: [1, 1.5, 1], opacity: [0.7, 0, 0.7] }}

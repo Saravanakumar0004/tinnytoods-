@@ -49,7 +49,7 @@ const Testimonials = () => {
 
   return (
     <section id="testimonials" className="py-20 bg-card relative overflow-hidden">
-      {/* Decorative elements */}
+     
       <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl" />
       
@@ -70,7 +70,7 @@ const Testimonials = () => {
           </p>
         </motion.div>
 
-        {/* Desktop Grid */}
+      
         <div className="hidden lg:grid lg:grid-cols-4 gap-6">
           {testimonials.map((testimonial, index) => (
             <motion.div
@@ -82,12 +82,12 @@ const Testimonials = () => {
               className="group"
             >
               <div className="glass-card-hover rounded-2xl p-6 h-full relative">
-                {/* Quote icon */}
+               
                 <div className="absolute -top-3 -right-3 w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
                   <Quote className="w-5 h-5 text-primary" />
                 </div>
                 
-                {/* Rating */}
+            
                 <div className="flex gap-1 mb-4">
                   {Array.from({ length: testimonial.rating }).map((_, i) => (
                     <Star key={i} className="w-4 h-4 text-accent fill-current" />
@@ -114,7 +114,7 @@ const Testimonials = () => {
           ))}
         </div>
 
-        {/* Mobile Carousel */}
+        
         <div className="lg:hidden">
           <motion.div
             key={currentIndex}

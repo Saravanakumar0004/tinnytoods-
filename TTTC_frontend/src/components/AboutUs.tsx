@@ -30,7 +30,7 @@
     return (
       <section id="about-us" className="py-10 bg-card relative overflow-hidden">
         
-        {/* Background decorations */}
+        
         <motion.div
           animate={{ x: [0, 50, 0], y: [0, 30, 0] }}
           transition={{ duration: 15, repeat: Infinity }}
@@ -51,7 +51,7 @@
               viewport={{ once: true }}
               className="relative"
             >
-              {/* Cards grid */}
+              
               <div className="grid grid-cols-2 gap-4">
                 {[
                   { icon: Award, label: "Excellence", color: "bg-lavender" },
@@ -80,7 +80,7 @@
                 ))}
               </div>
 
-              {/* Floating element */}
+             
               <motion.div
                 animate={{ y: [-10, 10, -10] }}
                 transition={{ duration: 4, repeat: Infinity }}
@@ -91,7 +91,7 @@
               </motion.div>
             </motion.div>
 
-            {/* Content Side */}
+            
             <motion.div
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}

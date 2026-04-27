@@ -80,9 +80,9 @@ const TherapyBanner = () => {
         id="home"
         className="relative w-full min-h-screen flex items-center overflow-hidden scroll-mt-36 bg-black"
       >
-        {/* Background images */}
+       
         <div className="absolute inset-0 z-0 bg-black">
-          {/* Current image */}
+          
           <div
             className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
               isTransitioning ? "opacity-0" : "opacity-100"
@@ -96,7 +96,7 @@ const TherapyBanner = () => {
             />
           </div>
 
-          {/* Next image */}
+          
           <div
             className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${
               isTransitioning ? "opacity-100" : "opacity-0"
@@ -111,14 +111,14 @@ const TherapyBanner = () => {
           </div>
         </div>
 
-        {/* Single overlay wrapper */}
+        
         <div className="absolute inset-0 z-[1]">
           <div className="absolute inset-0 bg-black/35" />
           <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/35 to-black/15" />
           <div className="absolute bottom-0 left-0 w-full h-24 sm:h-20 bg-gradient-to-t from-white via-white/40 to-transparent" />
         </div>
 
-        {/* Dots */}
+      
         <div className="absolute bottom-24 sm:bottom-28 left-1/2 -translate-x-1/2 z-[3] flex items-center gap-2">
           {BANNER_IMAGES.map((_, index) => (
             <button
@@ -135,7 +135,7 @@ const TherapyBanner = () => {
           ))}
         </div>
 
-        {/* Main Content */}
+       
         <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 sm:pt-28 md:pt-20 pb-10 sm:pb-16">
           <div className="flex items-center justify-center min-h-[calc(100vh-120px)] sm:min-h-[calc(100vh-220px)]">
             <motion.div
@@ -183,7 +183,7 @@ const TherapyBanner = () => {
             </motion.div>
           </div>
 
-          {/* Bottom Services Row */}
+          
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}

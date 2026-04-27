@@ -58,7 +58,7 @@ const TherapyTimeline = () => {
 
   return (
     <section id="timeline" className="py-10 bg-background relative overflow-hidden">
-      {/* Background decorations */}
+    
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,hsl(var(--primary)/0.05)_0%,transparent_50%)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,hsl(var(--secondary)/0.05)_0%,transparent_50%)]" />
       
@@ -80,9 +80,9 @@ const TherapyTimeline = () => {
           </p>
         </motion.div>
 
-        {/* Desktop Timeline */}
+        
         <div className="hidden lg:block relative max-w-5xl mx-auto">
-          {/* Central line */}
+       
           <motion.div
             initial={{ scaleY: 0 }}
             animate={isInView ? { scaleY: 1 } : {}}
@@ -100,7 +100,7 @@ const TherapyTimeline = () => {
                 index % 2 === 0 ? "flex-row" : "flex-row-reverse"
               }`}
             >
-              {/* Content card */}
+              
               <div className={`w-5/12 ${index % 2 === 0 ? "pr-12 text-right" : "pl-12 text-left"}`}>
                 <motion.div
                   whileHover={{ y: -5 }}
@@ -118,7 +118,7 @@ const TherapyTimeline = () => {
                 </motion.div>
               </div>
 
-              {/* Center icon */}
+              
               <div className="absolute left-1/2 -translate-x-1/2 z-10">
                 <motion.div
                   initial={{ scale: 0.8, opacity: 0  }}
@@ -134,7 +134,7 @@ const TherapyTimeline = () => {
                 </motion.div>
               </div>
 
-              {/* Step number */}
+           
               <div className={`w-5/12 ${index % 2 === 0 ? "pl-12" : "pr-12"}`}>
                 <span className="font-heading font-bold text-6xl text-muted/20">
                   0{milestone.step}
@@ -144,7 +144,7 @@ const TherapyTimeline = () => {
           ))}
         </div>
 
-        {/* Mobile Timeline */}
+     
         <div className="lg:hidden space-y-6">
           {milestones.map((milestone, index) => (
             <motion.div
@@ -154,7 +154,7 @@ const TherapyTimeline = () => {
               transition={{ delay: 0.1 * index }}
               className="flex gap-4"
             >
-              {/* Icon & Line */}
+             
               <div className="flex flex-col items-center">
                 <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${milestone.color} flex items-center justify-center shadow-lg shrink-0`}>
                   <milestone.icon className="w-5 h-5 text-white" />
@@ -164,7 +164,7 @@ const TherapyTimeline = () => {
                 )}
               </div>
 
-              {/* Content */}
+             
               <div className="pb-6">
                 <span className={`inline-block px-3 py-1 rounded-full text-xs font-medium bg-gradient-to-r ${milestone.color} text-white mb-2`}>
                   Step {milestone.step} • {milestone.duration}

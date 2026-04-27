@@ -191,7 +191,7 @@ export default function AdminPanel() {
 
   return (
     <>
-      {/* ===== SEO BLOCK ===== */}
+      
       <Helmet>
         <title>Admin Panel</title>
         <meta name="robots" content="noindex, nofollow" />
@@ -199,7 +199,7 @@ export default function AdminPanel() {
       </Helmet>
 
       <div className="min-h-screen bg-muted">
-        {/* ===== SIDEBAR ===== */}
+        
         <aside
           className={`
             fixed top-0 left-0 h-screen w-64 bg-background p-4 pb-10

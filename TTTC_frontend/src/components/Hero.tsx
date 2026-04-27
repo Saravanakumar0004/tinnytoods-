@@ -24,20 +24,19 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative min-h-[90vh] bg-hero-gradient overflow-hidden">
-      {/* Subtle decorative elements */}
       <div className="absolute top-20 left-10 w-48 h-48 bg-primary/5 rounded-full blur-3xl" />
       <div className="absolute top-40 right-20 w-64 h-64 bg-secondary/30 rounded-full blur-3xl" />
       <div className="absolute bottom-40 left-20 w-40 h-40 bg-accent/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto  px-4 py-20 lg:py-4">
-        {/* Advertisment*/}
+       
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
 
-          {/* 🔥 Advertisement block */}
+          
           <Advertisement />
         </motion.div>
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -104,7 +103,7 @@ const Hero = () => {
               </Button>
             </motion.div>
 
-            {/* Stats */}
+           
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -131,7 +130,7 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* Hero Image/Video */}
+          
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -139,9 +138,9 @@ const Hero = () => {
             className="relative z-10"
           >
             <div className="relative">
-              {/* Background shape */}
+              
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/50 via-lavender/30 to-peach/30 rounded-3xl transform rotate-2 scale-105" />
-              {/* Image/Video container */}
+             
               <motion.div
                 whileHover={{ scale: 1.01 }}
                 transition={{ duration: 0.2 }}
@@ -169,7 +168,7 @@ const Hero = () => {
                       className="w-full h-auto object-cover"
                     />
 
-                    {/* Play button overlay */}
+                   
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
@@ -191,7 +190,7 @@ const Hero = () => {
                 )}
               </motion.div>
 
-              {/* Floating badge */}
+             
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -211,7 +210,7 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Wave decoration at bottom */}
+     
       <div className="absolute bottom-0 left-0 right-0">
         <svg viewBox="0 0 1440 120" fill="none" className="w-full">
           <path
