@@ -87,11 +87,11 @@ const PAGE_COMPONENTS: Record<PageKey, React.ReactNode> = {
 };
 
 export default function AdminPanel() {
-  const [active, setActive]           = useState<PageKey>("home");
-  const [profileOpen, setProfileOpen] = useState(false);
-  const [mobileOpen, setMobileOpen]   = useState(false);
-  const [admin, setAdmin]             = useState<AdminProfile | null>(null);
-  const [callCount, setCallCount]     = useState(0);
+  const [active, setActive]               = useState<PageKey>("home");
+  const [profileOpen, setProfileOpen]     = useState(false);
+  const [mobileOpen, setMobileOpen]       = useState(false);
+  const [admin, setAdmin]                 = useState<AdminProfile | null>(null);
+  const [callCount, setCallCount]         = useState(0);
   const [profileLoaded, setProfileLoaded] = useState(false);
 
   const navigate = useNavigate();
@@ -191,9 +191,11 @@ export default function AdminPanel() {
 
   return (
     <>
+      {/* ===== SEO BLOCK ===== */}
       <Helmet>
-        <title>Admin Panel | Tiny Todds Therapy Care</title>
+        <title>Admin Panel</title>
         <meta name="robots" content="noindex, nofollow" />
+        <meta name="description" content="" />
       </Helmet>
 
       <div className="min-h-screen bg-muted">
@@ -242,7 +244,6 @@ export default function AdminPanel() {
               Total Calls: {callCount}
             </div>
 
-            {/* PROFILE SECTION */}
             <div
               className="flex items-center gap-3 cursor-pointer relative"
               onClick={() => setProfileOpen(!profileOpen)}
