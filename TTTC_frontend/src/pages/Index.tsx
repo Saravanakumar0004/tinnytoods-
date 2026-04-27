@@ -1,28 +1,24 @@
-// src/pages/Index.tsx  — Performance-optimized version
-import { useState, useEffect, lazy, Suspense } from "react";
+// src/pages/Index.tsx
+import { useState, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import AboutAutism from "@/components/AboutAutism";
+import AboutUs from "@/components/AboutUs";
+import Stats from "@/components/Stats";
+import TherapyTimeline from "@/components/TherapyTimeline";
+import Analytics from "@/components/Analytics";
+import FAQ from "@/components/FAQ";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
+import RocketScrollToTop from "@/components/RocketScrollToTop";
+import WhatsAppButton from "@/components/WhatsAppButton";
+import ParticleBackground from "@/components/ParticleBackground";
+import LoadingScreen from "@/components/LoadingScreen";
+import WaterWaveEffect from "@/components/WaterWaveEffect";
+import Banner from "@/components/Banner";
 import SEO from "@/component/Seo";
 import LocalBusinessSchema from "@/component/LocalBussinessSchema";
-
-// Lazy-load every below-the-fold component
-const AboutAutism     = lazy(() => import("@/components/AboutAutism"));
-const AboutUs         = lazy(() => import("@/components/AboutUs"));
-const Stats           = lazy(() => import("@/components/Stats"));
-const Analytics       = lazy(() => import("@/components/Analytics"));
-const TherapyTimeline = lazy(() => import("@/components/TherapyTimeline"));
-const FAQ             = lazy(() => import("@/components/FAQ"));
-const Contact         = lazy(() => import("@/components/Contact"));
-const Footer          = lazy(() => import("@/components/Footer"));
-const RocketScrollToTop = lazy(() => import("@/components/RocketScrollToTop"));
-const WhatsAppButton  = lazy(() => import("@/components/WhatsAppButton"));
-const Banner          = lazy(() => import("@/components/Banner"));
-const LoadingScreen   = lazy(() => import("@/components/LoadingScreen"));
-
-// ParticleBackground & WaterWaveEffect removed:
-// - ParticleBackground: 15 infinite framer-motion loops fixed to viewport → constant repaints
-// - WaterWaveEffect: mousemove listener creating state updates every 150ms → layout thrash
 
 const LOADED_KEY = "tiny_todds_loaded";
 
@@ -33,16 +29,18 @@ const Index = () => {
 
   useEffect(() => {
     if (!isLoading) return;
-    // Reduced 2500ms → 1200ms so LCP is not blocked by artificial wait
+
     const timer = setTimeout(() => {
       sessionStorage.setItem(LOADED_KEY, "1");
       setIsLoading(false);
-    }, 1200);
+    }, 2500);
+
     return () => clearTimeout(timer);
   }, [isLoading]);
 
   return (
     <>
+      
       <SEO
         title="Tiny Todds Therapy Care | Autism & Child Therapy Center in Chennai"
         description="Tiny Todds Therapy Care offers Speech Therapy, Occupational Therapy, Behavioral Therapy, Early Intervention, Special Education & Parent Training in Chennai."
@@ -50,28 +48,26 @@ const Index = () => {
       />
       <LocalBusinessSchema />
 
-      <Suspense fallback={null}>
-        <AnimatePresence mode="wait">
-          {isLoading && <LoadingScreen key="loading" />}
-        </AnimatePresence>
-      </Suspense>
+      <AnimatePresence mode="wait">
+        {isLoading && <LoadingScreen key="loading" />}
+      </AnimatePresence>
 
       <main className="min-h-screen bg-background overflow-x-hidden relative">
+        <WaterWaveEffect />
+        <ParticleBackground />
         <Header />
-        <Suspense fallback={null}><Banner /></Suspense>
+        <Banner />
         <Hero />
-        <Suspense fallback={null}>
-          <AboutAutism />
-          <AboutUs />
-          <Stats />
-          <Analytics />
-          <TherapyTimeline />
-          <FAQ />
-          <Contact />
-          <Footer />
-          <RocketScrollToTop />
-          <WhatsAppButton />
-        </Suspense>
+        <AboutAutism />
+        <AboutUs />
+        <Stats />
+        <Analytics />
+        <TherapyTimeline />
+        <FAQ />
+        <Contact />
+        <Footer />
+        <RocketScrollToTop />
+        <WhatsAppButton />
       </main>
     </>
   );
