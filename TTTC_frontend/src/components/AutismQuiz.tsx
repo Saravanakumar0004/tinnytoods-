@@ -1,19 +1,13 @@
-import { useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { 
-  ClipboardCheck, 
-  ChevronRight, 
-  RotateCcw, 
-  Sparkles,
-  Brain,
-  Lightbulb,
-  AlertCircle,
-  CheckCircle2,
-  Phone
+import {
+  ClipboardCheck, ChevronRight, RotateCcw,
+  Brain, Lightbulb, AlertCircle, CheckCircle2, Phone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const questions = [
+// ── Constants outside component ───────────────────────────────────────────────
+const QUESTIONS = [
   {
     id: 1,
     question: "Does your child make eye contact when you talk to them?",
@@ -74,101 +68,126 @@ const questions = [
       { text: "Extremely difficult to wait", autismScore: 2, adhdScore: 5 },
     ],
   },
-];
+] as const;
 
-const AutismQuiz = () => {
+const TOTAL = QUESTIONS.length;
+const MAX_AUTISM = 30;
+const MAX_ADHD = 25;
+
+// Stable animation variants — defined once, not inside render
+const slideVariants = {
+  initial: { opacity: 0, x: 50 },
+  animate: { opacity: 1, x: 0 },
+  exit: { opacity: 0, x: -50 },
+};
+const resultsVariants = {
+  initial: { opacity: 0, scale: 0.9 },
+  animate: { opacity: 1, scale: 1 },
+};
+const dotTransitionBase = { duration: 2, repeat: Infinity };
+
+// ── Sub-components ─────────────────────────────────────────────────────────────
+interface CircleChartProps { value: number; color: string; delay: number; }
+const CircleChart = memo(({ value, color, delay }: CircleChartProps) => (
+  <div className="relative w-32 h-32 mx-auto mb-4">
+    <svg className="w-full h-full transform -rotate-90" viewBox="0 0 128 128">
+      <circle cx="64" cy="64" r="56" stroke="currentColor" strokeWidth="12" fill="none" className="text-secondary" />
+      <motion.circle
+        cx="64" cy="64" r="56"
+        stroke="currentColor" strokeWidth="12" fill="none" strokeLinecap="round"
+        className={color}
+        initial={{ strokeDasharray: "0 352" }}
+        animate={{ strokeDasharray: `${value * 3.52} 352` }}
+        transition={{ duration: 1, delay }}
+      />
+    </svg>
+    <div className="absolute inset-0 flex items-center justify-center">
+      <span className="font-heading font-bold text-3xl text-primary">{value}%</span>
+    </div>
+  </div>
+));
+CircleChart.displayName = "CircleChart";
+
+// ── Main component ─────────────────────────────────────────────────────────────
+const AutismQuiz = memo(() => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState<number[]>([]);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
   const [showResults, setShowResults] = useState(false);
 
-  const handleOptionSelect = (optionIndex: number) => {
-    setSelectedOption(optionIndex);
-  };
+  const progress = ((currentQuestion + 1) / TOTAL) * 100;
 
-  const handleNext = () => {
-    if (selectedOption !== null) {
-      const newAnswers = [...answers, selectedOption];
-      setAnswers(newAnswers);
+  const handleOptionSelect = useCallback((i: number) => setSelectedOption(i), []);
 
-      if (currentQuestion < questions.length - 1) {
-        setCurrentQuestion(currentQuestion + 1);
-        setSelectedOption(null);
-      } else {
-        setShowResults(true);
-      }
+  const handleNext = useCallback(() => {
+    if (selectedOption === null) return;
+    const newAnswers = [...answers, selectedOption];
+    setAnswers(newAnswers);
+    if (currentQuestion < TOTAL - 1) {
+      setCurrentQuestion((q) => q + 1);
+      setSelectedOption(null);
+    } else {
+      setShowResults(true);
     }
-  };
+  }, [selectedOption, answers, currentQuestion]);
 
-  const calculateResults = () => {
-    let autismTotal = 0;
-    let adhdTotal = 0;
-
-    answers.forEach((answerIndex, questionIndex) => {
-      const option = questions[questionIndex].options[answerIndex];
-      autismTotal += option.autismScore;
-      adhdTotal += option.adhdScore;
-    });
-
-    const maxAutism = 30; 
-    const maxAdhd = 25; 
-
-    const autismPercentage = Math.round((autismTotal / maxAutism) * 100);
-    const adhdPercentage = Math.round((adhdTotal / maxAdhd) * 100);
-
-    
-    const total = autismPercentage + adhdPercentage;
-    if (total > 0) {
-      const normalizedAutism = Math.round((autismPercentage / total) * 100);
-      const normalizedAdhd = 100 - normalizedAutism;
-      return { autism: normalizedAutism, adhd: normalizedAdhd, rawAutism: autismPercentage, rawAdhd: adhdPercentage };
-    }
-    
-    return { autism: 0, adhd: 0, rawAutism: 0, rawAdhd: 0 };
-  };
-
-  const resetQuiz = () => {
+  const resetQuiz = useCallback(() => {
     setCurrentQuestion(0);
     setAnswers([]);
     setSelectedOption(null);
     setShowResults(false);
-  };
+  }, []);
 
-  const results = showResults ? calculateResults() : null;
-  const progress = ((currentQuestion + 1) / questions.length) * 100;
+  // Only computed once when showResults becomes true
+  const results = useMemo(() => {
+    if (!showResults) return null;
+    let autismTotal = 0;
+    let adhdTotal = 0;
+    answers.forEach((answerIndex, qi) => {
+      const opt = QUESTIONS[qi].options[answerIndex];
+      autismTotal += opt.autismScore;
+      adhdTotal += opt.adhdScore;
+    });
+    const autismPct = Math.round((autismTotal / MAX_AUTISM) * 100);
+    const adhdPct = Math.round((adhdTotal / MAX_ADHD) * 100);
+    const total = autismPct + adhdPct;
+    if (total === 0) return { autism: 0, adhd: 0 };
+    const autism = Math.round((autismPct / total) * 100);
+    return { autism, adhd: 100 - autism };
+  }, [showResults, answers]);
 
   return (
     <section id="quiz" className="py-10 bg-mint-gradient relative overflow-hidden">
-      
+
+      {/* Decorative — pointer-events-none so they don't block clicks */}
       <motion.div
         animate={{ rotate: 360 }}
         transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-        className="absolute top-20 right-20 w-60 h-60 border-4 border-dashed border-primary/20 rounded-full"
+        className="absolute top-20 right-20 w-60 h-60 border-4 border-dashed border-primary/20 rounded-full pointer-events-none"
       />
       <motion.div
         animate={{ scale: [1, 1.3, 1] }}
         transition={{ duration: 8, repeat: Infinity }}
-        className="absolute bottom-20 left-20 w-80 h-80 bg-accent/20 rounded-full blur-3xl"
+        className="absolute bottom-20 left-20 w-80 h-80 bg-accent/20 rounded-full blur-3xl pointer-events-none"
       />
-
-  
       <motion.div
         animate={{ y: [-15, 15, -15], rotate: [-5, 5, -5] }}
         transition={{ duration: 6, repeat: Infinity }}
-        className="absolute top-32 left-16 text-primary/40"
+        className="absolute top-32 left-16 text-primary/40 pointer-events-none"
       >
         <Brain className="w-12 h-12" />
       </motion.div>
       <motion.div
         animate={{ y: [10, -10, 10], rotate: [5, -5, 5] }}
         transition={{ duration: 5, repeat: Infinity }}
-        className="absolute bottom-40 right-24 text-accent/50"
+        className="absolute bottom-40 right-24 text-accent/50 pointer-events-none"
       >
         <Lightbulb className="w-10 h-10" />
       </motion.div>
 
       <div className="container mx-auto px-4 relative z-10">
-      
+
+        {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -184,19 +203,17 @@ const AutismQuiz = () => {
             <ClipboardCheck className="w-4 h-4" />
             Quick Assessment
           </motion.div>
-
           <h2 className="font-heading font-bold text-3xl md:text-4xl lg:text-5xl text-foreground mb-4">
             Is Your Child Showing Signs of{" "}
             <span className="text-gradient">Autism or ADHD?</span>
           </h2>
-
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Take this quick 6-question assessment to understand your child's behavior patterns. 
+            Take this quick 6-question assessment to understand your child's behavior patterns.
             This is not a medical diagnosis - please consult with our specialists for proper evaluation.
           </p>
         </motion.div>
 
-       
+        {/* Card */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -204,23 +221,23 @@ const AutismQuiz = () => {
           className="max-w-3xl mx-auto"
         >
           <div className="bg-card rounded-3xl shadow-float p-8 md:p-12 border border-border/50 relative overflow-hidden">
-            
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full" />
-            
+            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/10 to-transparent rounded-bl-full pointer-events-none" />
+
             <AnimatePresence mode="wait">
               {!showResults ? (
                 <motion.div
                   key={currentQuestion}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
+                  variants={slideVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
                   transition={{ duration: 0.3 }}
                 >
-                 
+                  {/* Progress bar */}
                   <div className="mb-8">
                     <div className="flex justify-between items-center mb-2">
                       <span className="text-sm font-medium text-muted-foreground">
-                        Question {currentQuestion + 1} of {questions.length}
+                        Question {currentQuestion + 1} of {TOTAL}
                       </span>
                       <span className="text-sm font-bold text-primary">{Math.round(progress)}%</span>
                     </div>
@@ -233,14 +250,12 @@ const AutismQuiz = () => {
                     </div>
                   </div>
 
-                 
                   <h3 className="font-heading font-bold text-xl md:text-2xl text-foreground mb-8">
-                    {questions[currentQuestion].question}
+                    {QUESTIONS[currentQuestion].question}
                   </h3>
 
-                 
                   <div className="space-y-4 mb-8">
-                    {questions[currentQuestion].options.map((option, index) => (
+                    {QUESTIONS[currentQuestion].options.map((option, index) => (
                       <motion.button
                         key={index}
                         onClick={() => handleOptionSelect(index)}
@@ -253,13 +268,9 @@ const AutismQuiz = () => {
                         }`}
                       >
                         <div className="flex items-center gap-4">
-                          <div
-                            className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
-                              selectedOption === index
-                                ? "bg-primary border-primary"
-                                : "border-muted-foreground"
-                            }`}
-                          >
+                          <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all ${
+                            selectedOption === index ? "bg-primary border-primary" : "border-muted-foreground"
+                          }`}>
                             {selectedOption === index && (
                               <motion.div
                                 initial={{ scale: 0 }}
@@ -274,7 +285,6 @@ const AutismQuiz = () => {
                     ))}
                   </div>
 
-                 
                   <Button
                     variant="playful"
                     size="xl"
@@ -282,15 +292,16 @@ const AutismQuiz = () => {
                     disabled={selectedOption === null}
                     className="w-full"
                   >
-                    {currentQuestion === questions.length - 1 ? "See Results" : "Next Question"}
+                    {currentQuestion === TOTAL - 1 ? "See Results" : "Next Question"}
                     <ChevronRight className="w-5 h-5 ml-2" />
                   </Button>
                 </motion.div>
               ) : (
                 <motion.div
                   key="results"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
+                  variants={resultsVariants}
+                  initial="initial"
+                  animate="animate"
                   transition={{ duration: 0.5 }}
                   className="text-center"
                 >
@@ -306,14 +317,11 @@ const AutismQuiz = () => {
                   <h3 className="font-heading font-bold text-2xl md:text-3xl text-foreground mb-4">
                     Assessment Complete!
                   </h3>
-
                   <p className="text-muted-foreground mb-8">
                     Based on your answers, here's a preliminary indication:
                   </p>
 
-                  
                   <div className="grid md:grid-cols-2 gap-6 mb-8">
-                   
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -324,40 +332,9 @@ const AutismQuiz = () => {
                         <Brain className="w-6 h-6 text-primary" />
                         <span className="font-heading font-bold text-lg text-foreground">Autism Traits</span>
                       </div>
-                      <div className="relative w-32 h-32 mx-auto mb-4">
-                        <svg className="w-full h-full transform -rotate-90">
-                          <circle
-                            cx="64"
-                            cy="64"
-                            r="56"
-                            stroke="currentColor"
-                            strokeWidth="12"
-                            fill="none"
-                            className="text-secondary"
-                          />
-                          <motion.circle
-                            cx="64"
-                            cy="64"
-                            r="56"
-                            stroke="currentColor"
-                            strokeWidth="12"
-                            fill="none"
-                            strokeLinecap="round"
-                            className="text-primary"
-                            initial={{ strokeDasharray: "0 352" }}
-                            animate={{ strokeDasharray: `${(results?.autism || 0) * 3.52} 352` }}
-                            transition={{ duration: 1, delay: 0.5 }}
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="font-heading font-bold text-3xl text-primary">
-                            {results?.autism}%
-                          </span>
-                        </div>
-                      </div>
+                      <CircleChart value={results?.autism ?? 0} color="text-primary" delay={0.5} />
                     </motion.div>
 
-                  
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -368,37 +345,7 @@ const AutismQuiz = () => {
                         <Lightbulb className="w-6 h-6 text-primary" />
                         <span className="font-heading font-bold text-lg text-foreground">ADHD Traits</span>
                       </div>
-                      <div className="relative w-32 h-32 mx-auto mb-4">
-                        <svg className="w-full h-full transform -rotate-90">
-                          <circle
-                            cx="64"
-                            cy="64"
-                            r="56"
-                            stroke="currentColor"
-                            strokeWidth="12"
-                            fill="none"
-                            className="text-secondary"
-                          />
-                          <motion.circle
-                            cx="64"
-                            cy="64"
-                            r="56"
-                            stroke="currentColor"
-                            strokeWidth="12"
-                            fill="none"
-                            strokeLinecap="round"
-                            className="text-accent"
-                            initial={{ strokeDasharray: "0 352" }}
-                            animate={{ strokeDasharray: `${(results?.adhd || 0) * 3.52} 352` }}
-                            transition={{ duration: 1, delay: 0.6 }}
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="font-heading font-bold text-3xl text-primary">
-                            {results?.adhd}%
-                          </span>
-                        </div>
-                      </div>
+                      <CircleChart value={results?.adhd ?? 0} color="text-accent" delay={0.6} />
                     </motion.div>
                   </div>
 
@@ -410,27 +357,17 @@ const AutismQuiz = () => {
                   >
                     <AlertCircle className="w-5 h-5 text-destructive flex-shrink-0 mt-0.5" />
                     <p className="text-sm text-muted-foreground text-left">
-                      <strong className="text-foreground">Important:</strong> This is a screening tool only, 
+                      <strong className="text-foreground">Important:</strong> This is a screening tool only,
                       not a medical diagnosis. Please consult with our certified therapists for a comprehensive evaluation.
                     </p>
                   </motion.div>
 
-               
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      onClick={resetQuiz}
-                      className="gap-2"
-                    >
+                    <Button variant="outline" size="lg" onClick={resetQuiz} className="gap-2">
                       <RotateCcw className="w-4 h-4" />
                       Take Again
                     </Button>
-                    <Button
-                      variant="playful"
-                      size="lg"
-                      asChild
-                    >
+                    <Button variant="playful" size="lg" asChild>
                       <a href="tel:+919941350646" className="gap-2">
                         <Phone className="w-4 h-4" />
                         Book Consultation
@@ -443,7 +380,7 @@ const AutismQuiz = () => {
           </div>
         </motion.div>
 
-   
+        {/* Dot indicators */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -451,20 +388,19 @@ const AutismQuiz = () => {
           transition={{ delay: 0.5 }}
           className="flex justify-center mt-8 gap-2"
         >
-          {[...Array(6)].map((_, i) => (
+          {Array.from({ length: TOTAL }, (_, i) => (
             <motion.div
               key={i}
               animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, delay: i * 0.2, repeat: Infinity }}
-              className={`w-2 h-2 rounded-full ${
-                i < currentQuestion + 1 ? "bg-primary" : "bg-muted"
-              }`}
+              transition={{ ...dotTransitionBase, delay: i * 0.2 }}
+              className={`w-2 h-2 rounded-full ${i < currentQuestion + 1 ? "bg-primary" : "bg-muted"}`}
             />
           ))}
         </motion.div>
       </div>
     </section>
   );
-};
+});
 
+AutismQuiz.displayName = "AutismQuiz";
 export default AutismQuiz;

@@ -1,5 +1,6 @@
+import { memo, useCallback } from "react";
 import { motion } from "framer-motion";
-import { LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 
 interface SmoothNavLinkProps {
   href: string;
@@ -10,32 +11,35 @@ interface SmoothNavLinkProps {
   isMobile?: boolean;
 }
 
-const SmoothNavLink = ({ href, icon: Icon, name, index, onClick, isMobile }: SmoothNavLinkProps) => {
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const targetId = href.replace('#', '');
-    const element = document.getElementById(targetId);
-    
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-    }
-    
-    onClick?.();
-  };
+const MOBILE_INITIAL = { opacity: 0, x: -20 };
+const DESKTOP_INITIAL = { opacity: 0, y: -20 };
+const VISIBLE = { opacity: 1, x: 0, y: 0 };
+const HOVER = { y: -2 };
+
+const SmoothNavLink = memo(({
+  href, icon: Icon, name, index, onClick, isMobile,
+}: SmoothNavLinkProps) => {
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>) => {
+      e.preventDefault();
+      const el = document.getElementById(href.replace("#", ""));
+      if (el) {
+        window.scrollTo({
+          top: el.getBoundingClientRect().top + window.scrollY - 80,
+          behavior: "smooth",
+        });
+      }
+      onClick?.();
+    },
+    [href, onClick]
+  );
 
   if (isMobile) {
     return (
       <motion.a
         href={href}
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
+        initial={MOBILE_INITIAL}
+        animate={VISIBLE}
         transition={{ delay: index * 0.05 }}
         onClick={handleClick}
         className="px-4 py-3 rounded-xl text-foreground font-medium hover:bg-secondary transition-colors flex items-center gap-3 active:scale-95"
@@ -49,10 +53,10 @@ const SmoothNavLink = ({ href, icon: Icon, name, index, onClick, isMobile }: Smo
   return (
     <motion.a
       href={href}
-      initial={{ opacity: 0, y: -20 }}
-      animate={{ opacity: 1, y: 0 }}
+      initial={DESKTOP_INITIAL}
+      animate={VISIBLE}
       transition={{ delay: index * 0.1 }}
-      whileHover={{ y: -2 }}
+      whileHover={HOVER}
       onClick={handleClick}
       className="px-3 py-2 rounded-xl text-foreground font-medium hover:bg-secondary hover:text-secondary-foreground transition-all duration-300 flex items-center gap-2 group"
     >
@@ -60,6 +64,7 @@ const SmoothNavLink = ({ href, icon: Icon, name, index, onClick, isMobile }: Smo
       <span className="text-sm">{name}</span>
     </motion.a>
   );
-};
+});
 
+SmoothNavLink.displayName = "SmoothNavLink";
 export default SmoothNavLink;
